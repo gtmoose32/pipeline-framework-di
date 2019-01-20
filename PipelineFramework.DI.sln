@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{BD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.LightInject.Examples", "examples\PipelineFramework.LightInject.Examples\PipelineFramework.LightInject.Examples.csproj", "{30388FF0-AB14-4219-A566-91A9A93B2807}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.Autofac.Examples", "examples\PipelineFramework.Autofac.Examples\PipelineFramework.Autofac.Examples.csproj", "{4D9E493C-88E3-4978-8594-0D330078AB57}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\SharedInfrastructure\SharedInfrastructure.projitems*{2d757ac7-38da-4172-b969-99825096c8a4}*SharedItemsImports = 13
@@ -50,6 +52,10 @@ Global
 		{30388FF0-AB14-4219-A566-91A9A93B2807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30388FF0-AB14-4219-A566-91A9A93B2807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30388FF0-AB14-4219-A566-91A9A93B2807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9E493C-88E3-4978-8594-0D330078AB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9E493C-88E3-4978-8594-0D330078AB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9E493C-88E3-4978-8594-0D330078AB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9E493C-88E3-4978-8594-0D330078AB57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78} = {61347E31-5143-4D0A-9C6C-9207826B9865}
 		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A} = {61347E31-5143-4D0A-9C6C-9207826B9865}
 		{30388FF0-AB14-4219-A566-91A9A93B2807} = {BD3CBB39-6CC4-4BF5-89B6-16CABFE42BBE}
+		{4D9E493C-88E3-4978-8594-0D330078AB57} = {BD3CBB39-6CC4-4BF5-89B6-16CABFE42BBE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68DD2DC0-C95B-407D-BC13-D1B9EAB361D6}
