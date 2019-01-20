@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BE430022-FA46-4178-9E40-3673B2D1A0DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{61347E31-5143-4D0A-9C6C-9207826B9865}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.LightInject", "src\PipelineFramework.LightInject\PipelineFramework.LightInject.csproj", "{9BAE000B-7647-48C7-B992-D3E800D9549F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.Autofac", "src\PipelineFramework.Autofac\PipelineFramework.Autofac.csproj", "{B7AC970E-AB16-4381-883C-74D5F931C67B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedInfrastructure", "tests\SharedInfrastructure\SharedInfrastructure.shproj", "{2D757AC7-38DA-4172-B969-99825096C8A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.LightInject.Tests", "tests\PipelineFramework.LightInject.Tests\PipelineFramework.LightInject.Tests.csproj", "{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineFramework.Autofac.Tests", "tests\PipelineFramework.Autofac.Tests\PipelineFramework.Autofac.Tests.csproj", "{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tests\SharedInfrastructure\SharedInfrastructure.projitems*{2d757ac7-38da-4172-b969-99825096c8a4}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BAE000B-7647-48C7-B992-D3E800D9549F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BAE000B-7647-48C7-B992-D3E800D9549F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BAE000B-7647-48C7-B992-D3E800D9549F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BAE000B-7647-48C7-B992-D3E800D9549F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7AC970E-AB16-4381-883C-74D5F931C67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AC970E-AB16-4381-883C-74D5F931C67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AC970E-AB16-4381-883C-74D5F931C67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AC970E-AB16-4381-883C-74D5F931C67B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BAE000B-7647-48C7-B992-D3E800D9549F} = {BE430022-FA46-4178-9E40-3673B2D1A0DA}
+		{B7AC970E-AB16-4381-883C-74D5F931C67B} = {BE430022-FA46-4178-9E40-3673B2D1A0DA}
+		{2D757AC7-38DA-4172-B969-99825096C8A4} = {61347E31-5143-4D0A-9C6C-9207826B9865}
+		{5FBA3F0C-DD74-4EFA-9965-92ECBD115E78} = {61347E31-5143-4D0A-9C6C-9207826B9865}
+		{DA370E23-D7E6-4C5C-8990-8E2BBD24B60A} = {61347E31-5143-4D0A-9C6C-9207826B9865}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68DD2DC0-C95B-407D-BC13-D1B9EAB361D6}
+	EndGlobalSection
+EndGlobal
