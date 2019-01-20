@@ -26,7 +26,7 @@ or via the .NET Core command line interface:
 ```
 dotnet add package PipelineFramework.Autofact
 
-dotnet add package PipelineFramework.LightInect
+dotnet add package PipelineFramework.LightInject
 ```
 
 Either commands, from Package Manager Console or .NET Core CLI, will download and install PipelineFramework.Core and all required dependencies.
