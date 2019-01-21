@@ -14,18 +14,33 @@ namespace PipelineFramework.LightInject.Examples
         }
     }
 
+    //Note:  ExecuteAsync method must be overriden in the implementations even if they only need to call the base class implementation.  
+    //       This is due to a issue with LightInject interception not working if the intercepted method isn't present on the class being used 
+    //       despite a base class implementation being present.
     public class Component1 : ComponentBase
     {
-        
+        // ReSharper disable once RedundantOverriddenMember
+        public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
+        {
+            return base.ExecuteAsync(payload, cancellationToken);
+        }
     }
 
     public class Component2 : ComponentBase
     {
-        
+        // ReSharper disable once RedundantOverriddenMember
+        public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
+        {
+            return base.ExecuteAsync(payload, cancellationToken);
+        } 
     }
 
     public class Component3 : ComponentBase
     {
-        
+        // ReSharper disable once RedundantOverriddenMember
+        public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
+        {
+            return base.ExecuteAsync(payload, cancellationToken);
+        }
     }
 }
