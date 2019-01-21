@@ -1,4 +1,5 @@
 # Pipeline Framework Dependency Injection
+[![Build status](https://dev.azure.com/gtmoose/Mathis%20Home/_apis/build/status/Pipeline%20Framework/Pipeline%20Framework%20DI%20-%20CICD)](https://dev.azure.com/gtmoose/Mathis%20Home/_build/latest?definitionId=7)
 
 ## What is it?
 
@@ -9,13 +10,13 @@ Examples in the [wiki](https://github.com/gtmoose32/pipeline-framwork-di/wiki).
 ## Installing Pipeline Framework Dependency Injection packages
 You should install the any of the libraries using nuget.
 
-[Pipeline Framework with Autofac](https://www.nuget.org/packages/PipelineFramework.Autofac/):
+[![nuget](https://img.shields.io/nuget/v/PipelineFramework.Autofac.svg)](https://www.nuget.org/packages/PipelineFramework.Autofac/)
 
 ```
 Install-Package PipelineFramework.Autofac
 ```
 
-[Pipeline Framework with LighInject](https://www.nuget.org/packages/PipelineFramework.LightInject/):
+[![nuget](https://img.shields.io/nuget/v/PipelineFramework.LightInject.svg)](https://www.nuget.org/packages/PipelineFramework.LightInject/)
 
 ```
 Install-Package PipelineFramework.LightInject
