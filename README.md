@@ -2,7 +2,7 @@
 
 ## What is it?
 
-Pipeline Framework Dependency Injection is a set of libraries providing component resoulution implementations for [Pipeline Framework](https://github.com/gtmoose32/pipeline-framework) using some popular dependency injection (IOC) containers. 
+Pipeline Framework Dependency Injection is a set of libraries which extends the [Pipeline Framework](https://github.com/gtmoose32/pipeline-framework) in order to utilize some popular dependency injection (IOC) containers. 
 
 Examples in the [wiki](https://github.com/gtmoose32/pipeline-framwork-di/wiki).
 
