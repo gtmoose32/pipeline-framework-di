@@ -1,9 +1,10 @@
 ﻿using LightInject;
 using LightInject.Interception;
 using PipelineFramework.Abstractions;
+using PipelineFramework.LightInject.Interception;
 using System;
 
-namespace PipelineFramework.LightInject.Interception
+namespace PipelineFramework.LightInject
 {
     public class DefaultLoggingCompositionRoot : ICompositionRoot
     {

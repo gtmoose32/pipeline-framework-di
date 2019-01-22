@@ -1,4 +1,5 @@
 ﻿using LightInject.Interception;
+using PipelineFramework.Abstractions;
 using Serilog;
 using System;
 using System.Diagnostics;
@@ -25,17 +26,22 @@ namespace PipelineFramework.LightInject.Interception
                 stopwatch.Start();
                 var result = await base.InvokeAsync<T>(invocationInfo);
                 stopwatch.Stop();
-                logger.Information(LoggingMessages.SuccessMessage, stopwatch.ElapsedMilliseconds);
+                logger.Information(LogMessageTemplates.SuccessMessage, stopwatch.ElapsedMilliseconds);
                 return result;
             }
             catch (Exception e)
             {
                 stopwatch.Stop();
-                logger.Error(e, LoggingMessages.ExceptionMessage, stopwatch.ElapsedMilliseconds);
+                logger.Error(e, LogMessageTemplates.ExceptionMessage, stopwatch.ElapsedMilliseconds);
                 throw;
             }
         }
 
-        protected virtual ILogger EnrichLogger(IInvocationInfo invocationInfo) => Logger;
+        protected virtual ILogger EnrichLogger(IInvocationInfo invocationInfo)
+        {
+            return invocationInfo.Proxy.Target is IPipelineComponent component
+                ? Logger.ForContext("ComponentName", component.Name)
+                : Logger;
+        }    
     }
 }

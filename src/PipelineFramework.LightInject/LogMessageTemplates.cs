@@ -1,6 +1,6 @@
-﻿namespace PipelineFramework.LightInject.Interception
+﻿namespace PipelineFramework.LightInject
 {
-    internal static class LoggingMessages
+    internal static class LogMessageTemplates
     {
         public const string SuccessMessage = "Execution completed. Elapsed time: {ElapsedTime} ms.";
         public const string ExceptionMessage = "Execution failed. Elapsed time: {ElapsedTime} ms.";

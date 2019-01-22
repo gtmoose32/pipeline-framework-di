@@ -14,13 +14,15 @@ namespace PipelineFramework.LightInject.Examples.Customizations
 
         protected override ILogger EnrichLogger(IInvocationInfo invocationInfo)
         {
+            var logger = base.EnrichLogger(invocationInfo);
+            
             var payload = invocationInfo.Arguments.Where(arg => arg is ExamplePipelinePayload)
                 .Cast<ExamplePipelinePayload>()
                 .FirstOrDefault();
 
             return payload != null
-                ? Logger.ForContext("TransactionId", payload.TransactionId)
-                : Logger;
+                ? logger.ForContext("TransactionId", payload.TransactionId)
+                : logger;
         }
     }
 }
