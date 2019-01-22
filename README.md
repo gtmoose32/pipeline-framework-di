@@ -8,7 +8,7 @@ Pipeline Framework Dependency Injection is a set of libraries which extends the 
 Examples in the [wiki](https://github.com/gtmoose32/pipeline-framwork-di/wiki).
 
 ## Installing Pipeline Framework Dependency Injection packages
-You should install the any of the libraries using nuget.
+Install any of the libraries using nuget.
 
 [![nuget](https://img.shields.io/nuget/v/PipelineFramework.Autofac.svg)](https://www.nuget.org/packages/PipelineFramework.Autofac/)
 
