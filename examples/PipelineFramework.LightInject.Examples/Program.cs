@@ -1,7 +1,4 @@
-﻿using LightInject;
-using PipelineFramework.Abstractions;
-using System;
-using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.LightInject.Examples
@@ -14,17 +11,13 @@ namespace PipelineFramework.LightInject.Examples
         /// <returns></returns>
         static async Task Main()
         {
-            var container = new ServiceContainer();
-            container.RegisterFrom<CompositionRoot>();
+            await Examples.RunNormalCompositionRootExampleAsync();
 
-            var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>();
+            await Examples.RunCompositionRootWithDefaultLoggingExampleAsync();
 
-            var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);
-
-            result.Messages.ForEach(Console.WriteLine);
+            await Examples.RunCompositionRootWithCustomLoggingExampleAsync();
 
             Console.Read();
-
         }
     }
 }
