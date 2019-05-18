@@ -1,7 +1,6 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
 using PipelineFramework.Tests.SharedInfrastructure;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,17 +16,17 @@ namespace PipelineFramework.LightInject.Tests.Infrastructure
             registry.Register<IPipelineComponent<TestPayload>, FooComponent>(typeof(FooComponent).Name);
             registry.Register<IPipelineComponent<TestPayload>, BarComponent>(typeof(BarComponent).Name);
 
-            registry.Register<IEnumerable<Type>>(factory =>
-                new List<Type> { typeof(FooComponent), typeof(BarComponent) });
-
             registry.Register<IDictionary<string, IDictionary<string, string>>>(
                 factory => new Dictionary<string, IDictionary<string, string>>());
 
-            registry.Register<IPipeline<TestPayload>>(
-                factory => new Pipeline<TestPayload>(
-                    factory.GetInstance<IPipelineComponentResolver>(),
-                    factory.GetInstance<IEnumerable<Type>>(),
-                    factory.GetInstance<IDictionary<string, IDictionary<string, string>>>()));
+            registry.Register(factory =>
+                PipelineBuilder<TestPayload>
+                    .NonAsync()
+                    .WithComponent<FooComponent>()
+                    .WithComponent<BarComponent>()
+                    .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
+                    .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
+                    .Build());
         }
     }
 }

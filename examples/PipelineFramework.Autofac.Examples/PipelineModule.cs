@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using PipelineFramework.Abstractions;
-using System;
 using System.Collections.Generic;
 
 namespace PipelineFramework.Autofac.Examples
@@ -18,23 +17,18 @@ namespace PipelineFramework.Autofac.Examples
             builder.RegisterType<Component3>()
                 .Named<IAsyncPipelineComponent<ExamplePipelinePayload>>(typeof(Component3).Name);
 
-            builder.RegisterInstance(
-                new[]
-                {
-                    typeof(Component1),
-                    typeof(Component2),
-                    typeof(Component3)
-                })
-                .As<IEnumerable<Type>>();
-
             builder.RegisterInstance(new Dictionary<string, IDictionary<string, string>>())
                 .As<IDictionary<string, IDictionary<string, string>>>();
 
             builder.Register(context =>
-                    new AsyncPipeline<ExamplePipelinePayload>(
-                        context.Resolve<IPipelineComponentResolver>(),
-                        context.Resolve<IEnumerable<Type>>(),
-                        context.Resolve<IDictionary<string, IDictionary<string, string>>>()))
+                PipelineBuilder<ExamplePipelinePayload>
+                    .Async()
+                    .WithComponent<Component1>()
+                    .WithComponent<Component2>()
+                    .WithComponent<Component3>()
+                    .WithComponentResolver(context.Resolve<IPipelineComponentResolver>())
+                    .WithSettings(context.Resolve<IDictionary<string, IDictionary<string, string>>>())
+                    .Build())
                 .As<IAsyncPipeline<ExamplePipelinePayload>>();
         }
     }

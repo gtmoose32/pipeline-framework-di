@@ -1,6 +1,5 @@
 ﻿using LightInject;
 using LightInject.Interception;
-using PipelineFramework.LightInject.Interception;
 
 namespace PipelineFramework.LightInject.Examples.Customizations
 {

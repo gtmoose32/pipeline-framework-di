@@ -1,16 +1,10 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using LightInject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PipelineFramework.Abstractions;
+using PipelineFramework.LightInject.Tests.Infrastructure;
 using PipelineFramework.Tests.SharedInfrastructure;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Threading.Tasks;
-using NSubstitute;
-using PipelineFramework.LightInject.Interception;
-using PipelineFramework.LightInject.Tests.Infrastructure;
-using Serilog;
 
 namespace PipelineFramework.LightInject.Tests
 {
@@ -32,7 +26,6 @@ namespace PipelineFramework.LightInject.Tests
             var result = _container.GetInstance<IPipeline<TestPayload>>();
 
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<Pipeline<TestPayload>>();
         }
     }
 }

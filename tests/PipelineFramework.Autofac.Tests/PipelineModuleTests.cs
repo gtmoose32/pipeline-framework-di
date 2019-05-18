@@ -27,7 +27,6 @@ namespace PipelineFramework.Autofac.Tests
             var result = _container.Resolve<IPipeline<TestPayload>>();
 
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<Pipeline<TestPayload>>();
         }
     }
 }
