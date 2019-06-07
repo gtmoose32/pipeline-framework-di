@@ -43,4 +43,12 @@ namespace PipelineFramework.LightInject.Examples
             return base.ExecuteAsync(payload, cancellationToken);
         }
     }
+
+    public class ExceptionComponent : AsyncPipelineComponentBase<ExamplePipelinePayload>
+    {
+        public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

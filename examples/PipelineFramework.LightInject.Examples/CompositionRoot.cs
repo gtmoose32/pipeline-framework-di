@@ -31,6 +31,19 @@ namespace PipelineFramework.LightInject.Examples
                     .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
                     .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
                     .Build(),
+                Examples.PipelineNames.PipelineName,
+                new PerContainerLifetime());
+
+            registry.Register(factory =>
+                    PipelineBuilder<ExamplePipelinePayload>
+                        .Async()
+                        .WithComponent<Component1>()
+                        .WithComponent<Component2>()
+                        .WithComponent<ExceptionComponent>()
+                        .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
+                        .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
+                        .Build(),
+                Examples.PipelineNames.ExceptionPipelineName,
                 new PerContainerLifetime());
         }
     }

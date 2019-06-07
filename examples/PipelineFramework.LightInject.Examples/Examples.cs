@@ -10,6 +10,13 @@ namespace PipelineFramework.LightInject.Examples
 {
     public static class Examples
     {
+        public static class PipelineNames
+        {
+            public const string ExceptionPipelineName = "ExceptionPipeline";
+
+            public const string PipelineName = "Pipeline";
+        }
+
         public static async Task RunNormalCompositionRootExampleAsync()
         {
             using (var container = new ServiceContainer())
@@ -18,7 +25,7 @@ namespace PipelineFramework.LightInject.Examples
 
                 container.RegisterFrom<CompositionRoot>();
 
-                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>();
+                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.PipelineName);
                 var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);
 
                 Console.WriteLine($"Pipeline has completed execution and returned '{result.Messages.Count}' component messages.");
@@ -36,11 +43,11 @@ namespace PipelineFramework.LightInject.Examples
                 container.Register<ILogger>(factory => new LoggerConfiguration().WriteTo.Console().CreateLogger(), new PerContainerLifetime());
                 container.RegisterFrom<DefaultLoggingCompositionRoot>();
 
-                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>();
+                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.PipelineName);
                 var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);
 
                 Console.WriteLine($"Pipeline has completed execution and returned '{result.Messages.Count}' component messages.");
-                Console.WriteLine("\n************** COMPOSITION ROOT WITH DEFAULT LOGGING RUN BEGIN **************\n\n");
+                Console.WriteLine("\n************** COMPOSITION ROOT WITH DEFAULT LOGGING RUN END **************\n\n");
             }
         }
 
@@ -56,11 +63,11 @@ namespace PipelineFramework.LightInject.Examples
                 container.Register<ILogger>(factory => new LoggerConfiguration().WriteTo.Console().CreateLogger(), new PerContainerLifetime());
                 container.RegisterFrom<CustomLoggingCompositionRoot>();
 
-                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>();
+                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.PipelineName);
                 var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);
 
                 Console.WriteLine($"Pipeline has completed execution and returned '{result.Messages.Count}' component messages.");
-                Console.WriteLine("\n************** COMPOSITION ROOT WITH CUSTOM LOGGING RUN BEGIN **************\n\n");
+                Console.WriteLine("\n************** COMPOSITION ROOT WITH CUSTOM LOGGING RUN END **************\n\n");
             }
         }
     }
