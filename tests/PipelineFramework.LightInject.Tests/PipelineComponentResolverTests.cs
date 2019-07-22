@@ -16,7 +16,7 @@ namespace PipelineFramework.LightInject.Tests
 
         public PipelineComponentResolverTests()
         {
-            _container = new ServiceContainer(new ContainerOptions { EnablePropertyInjection = false });
+            _container = new ServiceContainer();
             _container.Register<IPipelineComponent<TestPayload>, FooComponent>(typeof(FooComponent).Name);
         }
 

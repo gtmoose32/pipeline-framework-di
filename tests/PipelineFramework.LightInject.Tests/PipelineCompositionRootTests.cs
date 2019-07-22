@@ -16,7 +16,7 @@ namespace PipelineFramework.LightInject.Tests
 
         public PipelineCompositionRootTests()
         {
-            _container = new ServiceContainer(new ContainerOptions { EnablePropertyInjection = false });
+            _container = new ServiceContainer();
             _container.RegisterFrom<TestCompositionRoot>();
         }
 

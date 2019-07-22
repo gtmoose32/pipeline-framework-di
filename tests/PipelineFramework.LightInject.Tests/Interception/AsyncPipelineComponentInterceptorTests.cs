@@ -24,7 +24,7 @@ namespace PipelineFramework.LightInject.Tests.Interception
             _logger.ForContext(Arg.Any<string>(), Arg.Any<string>())
                 .Returns(_logger);
 
-            _container = new ServiceContainer(new ContainerOptions { EnablePropertyInjection = false });
+            _container = new ServiceContainer();
             _container.RegisterInstance(_logger);
         }
 
