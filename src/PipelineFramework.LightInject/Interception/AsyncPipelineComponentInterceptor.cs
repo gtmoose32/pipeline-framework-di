@@ -40,8 +40,10 @@ namespace PipelineFramework.LightInject.Interception
         protected virtual ILogger EnrichLogger(IInvocationInfo invocationInfo)
         {
             return invocationInfo.Proxy.Target is IPipelineComponent component
-                ? Logger.ForContext("ComponentName", component.Name)
+                ? Logger.ForContext(ComponentNameLoggingLabel, component.Name)
                 : Logger;
-        }    
+        }
+
+        public virtual string ComponentNameLoggingLabel => "ComponentName";
     }
 }
