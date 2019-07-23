@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/gtmoose32/pipeline-framework-di</RepositoryUrl>
     <PackageProjectUrl>https://github.com/gtmoose32/pipeline-framework-di</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>3.1.0</Version>
+    <Version>3.2.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Extends PipelineFramework to enable LightInject DI container for pipeline construction and execution</Description>
     <NeutralLanguage>en</NeutralLanguage>
@@ -18,7 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LightInject.Interception" Version="2.0.0" />
+    <PackageReference Include="LightInject" Version="5.5.0" />
+    <PackageReference Include="LightInject.Interception" Version="2.0.3" />
     <PackageReference Include="PipelineFramework.Core" Version="3.1.0" />
     <PackageReference Include="Serilog" Version="2.8.0" />
   </ItemGroup>
