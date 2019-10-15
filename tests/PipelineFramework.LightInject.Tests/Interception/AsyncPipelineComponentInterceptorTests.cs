@@ -6,11 +6,13 @@ using PipelineFramework.Abstractions;
 using PipelineFramework.Tests.SharedInfrastructure;
 using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.LightInject.Tests.Interception
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class AsyncPipelineComponentInterceptorTests
     {
