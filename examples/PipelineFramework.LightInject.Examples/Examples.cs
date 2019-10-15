@@ -3,11 +3,13 @@ using PipelineFramework.Abstractions;
 using PipelineFramework.LightInject.Examples.Customizations;
 using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.LightInject.Examples
 {
+    [ExcludeFromCodeCoverage]
     public static class Examples
     {
         public static class PipelineNames

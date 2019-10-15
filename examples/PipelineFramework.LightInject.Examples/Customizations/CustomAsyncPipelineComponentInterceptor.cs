@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace PipelineFramework.LightInject.Examples.Customizations
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class CustomAsyncPipelineComponentInterceptor : AsyncPipelineComponentInterceptor
     {
         public CustomAsyncPipelineComponentInterceptor(ILogger logger) 

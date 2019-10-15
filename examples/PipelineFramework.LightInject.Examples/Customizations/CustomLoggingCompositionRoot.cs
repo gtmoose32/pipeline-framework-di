@@ -3,6 +3,7 @@ using LightInject.Interception;
 
 namespace PipelineFramework.LightInject.Examples.Customizations
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class CustomLoggingCompositionRoot : DefaultLoggingCompositionRoot
     {
         protected override void RegisterAsyncInterceptor(IServiceRegistry serviceRegistry) =>

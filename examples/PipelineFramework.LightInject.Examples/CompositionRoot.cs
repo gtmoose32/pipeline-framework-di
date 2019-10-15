@@ -1,9 +1,11 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PipelineFramework.LightInject.Examples
 {
+    [ExcludeFromCodeCoverage]
     public class CompositionRoot : PipelineCompositionRootBase
     {
         public override void Compose(IServiceRegistry registry)
