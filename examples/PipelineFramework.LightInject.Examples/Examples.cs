@@ -1,6 +1,7 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
 using PipelineFramework.LightInject.Examples.Customizations;
+using PipelineFramework.LightInject.Logging;
 using Serilog;
 using System;
 using System.Threading;

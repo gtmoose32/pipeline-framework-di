@@ -1,5 +1,5 @@
 ﻿using LightInject.Interception;
-using PipelineFramework.LightInject.Interception;
+using PipelineFramework.LightInject.Logging.Interceptors;
 using Serilog;
 using System.Linq;
 
@@ -12,6 +12,7 @@ namespace PipelineFramework.LightInject.Examples.Customizations
         {
         }
 
+        ///Override to add custom logger context through LogEventEnrichers
         protected override ILogger EnrichLogger(IInvocationInfo invocationInfo)
         {
             var logger = base.EnrichLogger(invocationInfo);
@@ -24,5 +25,8 @@ namespace PipelineFramework.LightInject.Examples.Customizations
                 ? logger.ForContext("TransactionId", payload.TransactionId)
                 : logger;
         }
+
+        //Override to alter the name of the property enricher that represents the name of the pipeline component
+        public override string ComponentNameLoggingLabel => "Step";
     }
 }

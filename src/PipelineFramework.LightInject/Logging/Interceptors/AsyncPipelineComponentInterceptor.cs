@@ -1,11 +1,11 @@
-﻿using LightInject.Interception;
-using PipelineFramework.Abstractions;
-using Serilog;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using LightInject.Interception;
+using PipelineFramework.Abstractions;
+using Serilog;
 
-namespace PipelineFramework.LightInject.Interception
+namespace PipelineFramework.LightInject.Logging.Interceptors
 {
     public class AsyncPipelineComponentInterceptor : AsyncInterceptor
     {

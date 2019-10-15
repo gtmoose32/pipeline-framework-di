@@ -9,8 +9,7 @@ namespace PipelineFramework.LightInject
         {
             var container = registry as IServiceFactory;
 
-            registry.Register<IPipelineComponentResolver>(factory =>
-                new PipelineComponentResolver(container), new PerContainerLifetime());
+            registry.RegisterSingleton<IPipelineComponentResolver>(factory => new PipelineComponentResolver(container));
         }
     }
 }

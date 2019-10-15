@@ -3,6 +3,7 @@ using LightInject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using PipelineFramework.Abstractions;
+using PipelineFramework.LightInject.Logging;
 using PipelineFramework.Tests.SharedInfrastructure;
 using Serilog;
 using System;

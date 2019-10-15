@@ -1,4 +1,4 @@
-﻿namespace PipelineFramework.LightInject
+﻿namespace PipelineFramework.LightInject.Logging
 {
     internal static class LogMessageTemplates
     {

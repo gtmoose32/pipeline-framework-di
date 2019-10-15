@@ -1,12 +1,10 @@
-﻿using LightInject;
-using LightInject.Interception;
+﻿using PipelineFramework.LightInject.Logging;
+using System;
 
 namespace PipelineFramework.LightInject.Examples.Customizations
 {
     public class CustomLoggingCompositionRoot : DefaultLoggingCompositionRoot
     {
-        protected override void RegisterAsyncInterceptor(IServiceRegistry serviceRegistry) =>
-            serviceRegistry.Register<IInterceptor, CustomAsyncPipelineComponentInterceptor>(AsyncInterceptorServiceName);
-        
+        protected override Type GetAsyncPipelineComponentInterceptorType() => typeof(CustomAsyncPipelineComponentInterceptor);
     }
 }

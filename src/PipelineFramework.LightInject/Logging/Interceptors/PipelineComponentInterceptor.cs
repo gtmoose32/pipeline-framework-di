@@ -1,10 +1,10 @@
-﻿using LightInject.Interception;
+﻿using System;
+using System.Diagnostics;
+using LightInject.Interception;
 using PipelineFramework.Abstractions;
 using Serilog;
-using System;
-using System.Diagnostics;
 
-namespace PipelineFramework.LightInject.Interception
+namespace PipelineFramework.LightInject.Logging.Interceptors
 {
     public class PipelineComponentInterceptor : IInterceptor
     {
