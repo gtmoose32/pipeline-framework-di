@@ -13,6 +13,8 @@ namespace PipelineFramework.LightInject.Examples
         /// <returns></returns>
         static async Task Main()
         {
+            Console.WriteLine("\n");
+
             await Examples.RunNormalCompositionRootExampleAsync();
 
             await Examples.RunCompositionRootWithDefaultLoggingExampleAsync();

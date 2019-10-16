@@ -44,31 +44,7 @@ namespace PipelineFramework.LightInject
         /// <param name="assembly">The specified <see cref="Assembly"/> to scan.</param>
         /// <returns><see cref="IServiceRegistry"/></returns>
         public static IServiceRegistry RegisterAsyncPipelineComponentsFromAssembly(this IServiceRegistry serviceRegistry, Assembly assembly)
-        {
-            var components = from t in assembly.GetTypes()
-                let interfaces = t.GetInterfaces()
-                where !t.IsAbstract &&
-                      !t.IsInterface &&
-                      interfaces.Any(IsAsyncPipelineComponent)
-                select new
-                {
-                    ImplementingType = t,
-                    AyncPipelineComponentInterfaces = interfaces.Where(IsAsyncPipelineComponent)
-                };
-
-            foreach (var component in components)
-            {
-                foreach (var i in component.AyncPipelineComponentInterfaces)
-                {
-                    serviceRegistry.Register(i, component.ImplementingType, component.ImplementingType.Name);
-                }
-            }
-
-            return serviceRegistry;
-
-            //Local function
-            bool IsAsyncPipelineComponent(Type i) => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAsyncPipelineComponent<>);
-        }
+            => RegisterComponentsFromAssembly(serviceRegistry, assembly, true);
 
         /// <summary>
         /// Scans the specified <see cref="Assembly"/> for any types that implement <see cref="IPipelineComponent{T}"/> and automatically registers those matching types with the LightInject container.
@@ -77,16 +53,23 @@ namespace PipelineFramework.LightInject
         /// <param name="assembly">The specified <see cref="Assembly"/> to scan.</param>
         /// <returns><see cref="IServiceRegistry"/></returns>
         public static IServiceRegistry RegisterPipelineComponentsFromAssembly(this IServiceRegistry serviceRegistry, Assembly assembly)
+            => RegisterComponentsFromAssembly(serviceRegistry, assembly);
+
+        private static IServiceRegistry RegisterComponentsFromAssembly(this IServiceRegistry serviceRegistry, Assembly assembly, bool useAsyncComponents = false)
         {
+            Func<Type, bool> isComponent;
+            if (useAsyncComponents) isComponent = IsAsyncPipelineComponent;
+            else isComponent = IsPipelineComponent;
+
             var components = from t in assembly.GetTypes()
                 let interfaces = t.GetInterfaces()
                 where !t.IsAbstract &&
                       !t.IsInterface &&
-                      interfaces.Any(IsPipelineComponent)
+                      interfaces.Any(isComponent)
                 select new
                 {
                     ImplementingType = t,
-                    PipelineComponentInterfaces = interfaces.Where(IsPipelineComponent)
+                    PipelineComponentInterfaces = interfaces.Where(isComponent)
                 };
 
             foreach (var component in components)
@@ -99,7 +82,8 @@ namespace PipelineFramework.LightInject
 
             return serviceRegistry;
 
-            //Local function
+            //Local functions
+            bool IsAsyncPipelineComponent(Type i) => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAsyncPipelineComponent<>);
             bool IsPipelineComponent(Type i) => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPipelineComponent<>);
         }
     }
