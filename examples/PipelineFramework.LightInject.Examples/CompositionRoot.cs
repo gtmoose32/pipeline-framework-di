@@ -2,6 +2,7 @@
 using PipelineFramework.Abstractions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace PipelineFramework.LightInject.Examples
 {
@@ -14,17 +15,15 @@ namespace PipelineFramework.LightInject.Examples
             //will register the LightInject container implementation of IPipelineComponentResolver automatically.
             base.Compose(registry);
 
-            registry  //Register components
-                .Register<IAsyncPipelineComponent<ExamplePipelinePayload>, Component1>(typeof(Component1).Name)
-                .Register<IAsyncPipelineComponent<ExamplePipelinePayload>, Component3>(typeof(Component2).Name)
-                .Register<IAsyncPipelineComponent<ExamplePipelinePayload>, Component3>(typeof(Component3).Name);
+            //Register components
+            registry.RegisterAsyncPipelineComponentsFromAssembly(Assembly.GetExecutingAssembly());
 
             //Register configuration
-            registry.Register<IDictionary<string, IDictionary<string, string>>>(factory =>
-                    new Dictionary<string, IDictionary<string, string>>());
+            registry.RegisterInstance(
+                typeof(IDictionary<string, IDictionary<string, string>>), new Dictionary<string, IDictionary<string, string>>());
 
             //Register pipeline with builder
-            registry.Register(factory =>
+            registry.RegisterSingleton(factory =>
                 PipelineBuilder<ExamplePipelinePayload>
                     .Async()
                     .WithComponent<Component1>()
@@ -33,10 +32,9 @@ namespace PipelineFramework.LightInject.Examples
                     .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
                     .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
                     .Build(),
-                Examples.PipelineNames.PipelineName,
-                new PerContainerLifetime());
+                Examples.PipelineNames.PipelineName);
 
-            registry.Register(factory =>
+            registry.RegisterSingleton(factory =>
                     PipelineBuilder<ExamplePipelinePayload>
                         .Async()
                         .WithComponent<Component1>()
@@ -45,8 +43,7 @@ namespace PipelineFramework.LightInject.Examples
                         .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
                         .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
                         .Build(),
-                Examples.PipelineNames.ExceptionPipelineName,
-                new PerContainerLifetime());
+                Examples.PipelineNames.ExceptionPipelineName);
         }
     }
 }

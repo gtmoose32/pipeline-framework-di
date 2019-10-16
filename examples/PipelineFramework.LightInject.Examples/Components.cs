@@ -1,4 +1,5 @@
 ﻿using PipelineFramework.Abstractions;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,9 +25,7 @@ namespace PipelineFramework.LightInject.Examples
     {
         // ReSharper disable once RedundantOverriddenMember
         public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
-        {
-            return base.ExecuteAsync(payload, cancellationToken);
-        }
+            => base.ExecuteAsync(payload, cancellationToken);
     }
 
     [ExcludeFromCodeCoverage]
@@ -34,9 +33,7 @@ namespace PipelineFramework.LightInject.Examples
     {
         // ReSharper disable once RedundantOverriddenMember
         public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
-        {
-            return base.ExecuteAsync(payload, cancellationToken);
-        } 
+            => base.ExecuteAsync(payload, cancellationToken);
     }
 
     [ExcludeFromCodeCoverage]
@@ -44,17 +41,13 @@ namespace PipelineFramework.LightInject.Examples
     {
         // ReSharper disable once RedundantOverriddenMember
         public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
-        {
-            return base.ExecuteAsync(payload, cancellationToken);
-        }
+            => base.ExecuteAsync(payload, cancellationToken);
     }
 
     [ExcludeFromCodeCoverage]
     public class ExceptionComponent : AsyncPipelineComponentBase<ExamplePipelinePayload>
     {
         public override Task<ExamplePipelinePayload> ExecuteAsync(ExamplePipelinePayload payload, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
+            => throw new InvalidOperationException();
     }
 }
