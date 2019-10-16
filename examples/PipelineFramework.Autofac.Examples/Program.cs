@@ -1,11 +1,13 @@
 ﻿using Autofac;
 using PipelineFramework.Abstractions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.Autofac.Examples
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
         static async Task Main()

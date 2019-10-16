@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.LightInject.Examples
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
         /// <summary>
@@ -11,6 +13,8 @@ namespace PipelineFramework.LightInject.Examples
         /// <returns></returns>
         static async Task Main()
         {
+            Console.WriteLine("\n");
+
             await Examples.RunNormalCompositionRootExampleAsync();
 
             await Examples.RunCompositionRootWithDefaultLoggingExampleAsync();

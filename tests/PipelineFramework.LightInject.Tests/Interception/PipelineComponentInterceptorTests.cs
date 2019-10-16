@@ -7,10 +7,12 @@ using PipelineFramework.LightInject.Logging;
 using PipelineFramework.Tests.SharedInfrastructure;
 using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace PipelineFramework.LightInject.Tests.Interception
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class PipelineComponentInterceptorTests
     {

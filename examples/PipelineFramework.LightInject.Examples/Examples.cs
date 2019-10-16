@@ -1,14 +1,17 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Exceptions;
 using PipelineFramework.LightInject.Examples.Customizations;
 using PipelineFramework.LightInject.Logging;
 using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PipelineFramework.LightInject.Examples
 {
+    [ExcludeFromCodeCoverage]
     public static class Examples
     {
         public static class PipelineNames
@@ -41,13 +44,26 @@ namespace PipelineFramework.LightInject.Examples
                 Console.WriteLine("************** COMPOSITION ROOT WITH DEFAULT LOGGING RUN BEGIN **************\n");
 
                 container.RegisterFrom<CompositionRoot>();
-                container.Register<ILogger>(factory => new LoggerConfiguration().WriteTo.Console().CreateLogger(), new PerContainerLifetime());
+                container.RegisterInstance(typeof(ILogger), new LoggerConfiguration().WriteTo.Console().CreateLogger());
                 container.RegisterFrom<DefaultLoggingCompositionRoot>();
 
-                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.PipelineName);
-                var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);
+                var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.ExceptionPipelineName);
+                
+                var payload = new ExamplePipelinePayload();
+                try
+                {
+                    payload = await pipeline.ExecuteAsync(payload, CancellationToken.None);
+                }
+                catch (PipelineExecutionException exception)
+                {
+                    container.GetInstance<ILogger>()
+                        .Error(
+                            exception, 
+                            "An exception was thrown by pipeline component named '{ComponentName}'", 
+                            exception.ThrowingComponent.Name);
+                }
 
-                Console.WriteLine($"Pipeline has completed execution and returned '{result.Messages.Count}' component messages.");
+                Console.WriteLine($"Pipeline has completed execution and returned '{payload.Messages.Count}' component messages.");
                 Console.WriteLine("\n************** COMPOSITION ROOT WITH DEFAULT LOGGING RUN END **************\n\n");
             }
         }

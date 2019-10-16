@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using PipelineFramework.Abstractions;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PipelineFramework.Autofac.Examples
 {
+    [ExcludeFromCodeCoverage]
     public class PipelineModule : PipelineModuleBase
     {
         protected override void Load(ContainerBuilder builder)
