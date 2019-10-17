@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using LightInject.Interception;
 
 namespace PipelineFramework.LightInject.Tests.Interception
 {
@@ -35,7 +36,7 @@ namespace PipelineFramework.LightInject.Tests.Interception
         public async Task AsyncInterceptor_Test()
         {
             const string name = nameof(AsyncTestComponent);
-            _container.RegisterFrom<DefaultLoggingCompositionRoot>();
+            _container.AddAsyncPipelineComponentLogging();
             _container.Register<IAsyncPipelineComponent<TestPayload>, AsyncTestComponent>();
 
             var component = _container.GetInstance<IAsyncPipelineComponent<TestPayload>>();
@@ -49,10 +50,28 @@ namespace PipelineFramework.LightInject.Tests.Interception
         }
 
         [TestMethod]
+        public async Task AsyncInterceptor_CustomInterceptor_Test()
+        {
+            const string name = nameof(AsyncTestComponent);
+            _container.AddAsyncPipelineComponentLogging<CustomAsyncInterceptor>();
+            _container.Register<IAsyncPipelineComponent<TestPayload>, AsyncTestComponent>();
+
+            var component = _container.GetInstance<IAsyncPipelineComponent<TestPayload>>();
+            component.Initialize(name, null);
+            var result = await component.ExecuteAsync(new TestPayload(), CancellationToken.None);
+
+            result.Should().NotBeNull();
+
+            _logger.Received().ForContext(Arg.Is("ComponentName"), Arg.Is(name));
+            _logger.Received(2).ForContext(Arg.Any<string>(), Arg.Any<string>());
+            _logger.Received().Information(Arg.Is(LogMessageTemplates.SuccessMessage), Arg.Any<long>());
+        }
+
+        [TestMethod]
         public void AsyncInterceptor_ComponentException_Test()
         {
             const string name = nameof(BarExceptionComponent);
-            _container.RegisterFrom<DefaultLoggingCompositionRoot>();
+            _container.AddAsyncPipelineComponentLogging();
             _container.Register<IAsyncPipelineComponent<TestPayload>, BarExceptionComponent>();
 
             var component = _container.GetInstance<IAsyncPipelineComponent<TestPayload>>();
@@ -63,6 +82,22 @@ namespace PipelineFramework.LightInject.Tests.Interception
             
             _logger.Received().ForContext(Arg.Is("ComponentName"), Arg.Is(name));
             _logger.Received().Error(Arg.Any<Exception>(), Arg.Is(LogMessageTemplates.ExceptionMessage), Arg.Any<long>());
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class CustomAsyncInterceptor : AsyncPipelineComponentInterceptor
+    {
+        public CustomAsyncInterceptor(ILogger logger) 
+            : base(logger)
+        {
+        }
+
+        protected override ILogger EnrichLogger(IInvocationInfo invocationInfo)
+        {
+            var logger = base.EnrichLogger(invocationInfo);
+
+            return logger.ForContext("Test", "me");
         }
     }
 }

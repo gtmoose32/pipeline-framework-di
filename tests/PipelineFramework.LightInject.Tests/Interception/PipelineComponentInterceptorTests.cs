@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using LightInject;
+using LightInject.Interception;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using PipelineFramework.Abstractions;
@@ -34,8 +35,8 @@ namespace PipelineFramework.LightInject.Tests.Interception
         public void Interceptor_Test()
         {
             const string name = nameof(FooComponent);
-            _container.RegisterFrom<DefaultLoggingCompositionRoot>();
-            _container.Register<IPipelineComponent<TestPayload>, FooComponent>();
+            _container.AddPipelineComponentLogging();
+            _container.RegisterPipelineComponent<FooComponent, TestPayload>();
 
             var component = _container.GetInstance<IPipelineComponent<TestPayload>>();
             component.Initialize(name, null);
@@ -51,8 +52,8 @@ namespace PipelineFramework.LightInject.Tests.Interception
         public void Interceptor_ComponentException_Test()
         {
             const string name = nameof(BarExceptionComponent);
-            _container.RegisterFrom<DefaultLoggingCompositionRoot>();
-            _container.Register<IPipelineComponent<TestPayload>, BarExceptionComponent>();
+            _container.AddPipelineComponentLogging();
+            _container.RegisterPipelineComponent<BarExceptionComponent, TestPayload>();
 
             var component = _container.GetInstance<IPipelineComponent<TestPayload>>();
             component.Initialize(name, null);
@@ -63,5 +64,40 @@ namespace PipelineFramework.LightInject.Tests.Interception
             _logger.Received().ForContext(Arg.Is("ComponentName"), Arg.Is(name));
             _logger.Received().Error(Arg.Any<Exception>(), Arg.Is(LogMessageTemplates.ExceptionMessage), Arg.Any<long>());
         }
+
+        [TestMethod]
+        public void Interceptor_CustomInterceptor_Test()
+        {
+            const string name = nameof(FooComponent);
+            _container.AddPipelineComponentLogging<CustomInterceptor>();
+            _container.RegisterPipelineComponent<FooComponent, TestPayload>();
+
+            var component = _container.GetInstance<IPipelineComponent<TestPayload>>();
+            component.Initialize(name, null);
+            var result = component.Execute(new TestPayload(), CancellationToken.None);
+
+            result.Should().NotBeNull();
+
+            _logger.Received().ForContext(Arg.Is("ComponentName"), Arg.Is(name));
+            _logger.Received(2).ForContext(Arg.Any<string>(), Arg.Any<string>());
+            _logger.Received().Information(Arg.Is(LogMessageTemplates.SuccessMessage), Arg.Any<long>());
+        }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class CustomInterceptor : PipelineComponentInterceptor
+    {
+        public CustomInterceptor(ILogger logger)
+            : base(logger)
+        {
+        }
+
+        protected override ILogger EnrichLogger(IInvocationInfo invocationInfo)
+        {
+            var logger = base.EnrichLogger(invocationInfo);
+
+            return logger.ForContext("Test", "me");
+        }
+    }
+
 }

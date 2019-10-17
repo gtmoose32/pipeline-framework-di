@@ -2,7 +2,6 @@
 using PipelineFramework.Abstractions;
 using PipelineFramework.Exceptions;
 using PipelineFramework.LightInject.Examples.Customizations;
-using PipelineFramework.LightInject.Logging;
 using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -45,7 +44,7 @@ namespace PipelineFramework.LightInject.Examples
 
                 container.RegisterFrom<CompositionRoot>();
                 container.RegisterInstance(typeof(ILogger), new LoggerConfiguration().WriteTo.Console().CreateLogger());
-                container.RegisterFrom<DefaultLoggingCompositionRoot>();
+                container.AddAsyncPipelineComponentLogging();
 
                 var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.ExceptionPipelineName);
                 
@@ -77,8 +76,8 @@ namespace PipelineFramework.LightInject.Examples
                 Console.WriteLine("Debugging code allows you to see the logger enriched for this sample.\n");
                 
                 container.RegisterFrom<CompositionRoot>();
-                container.Register<ILogger>(factory => new LoggerConfiguration().WriteTo.Console().CreateLogger(), new PerContainerLifetime());
-                container.RegisterFrom<CustomLoggingCompositionRoot>();
+                container.RegisterInstance(new LoggerConfiguration().WriteTo.Console().CreateLogger());
+                container.AddAsyncPipelineComponentLogging<CustomAsyncPipelineComponentInterceptor>();
 
                 var pipeline = container.GetInstance<IAsyncPipeline<ExamplePipelinePayload>>(PipelineNames.PipelineName);
                 var result = await pipeline.ExecuteAsync(new ExamplePipelinePayload(), CancellationToken.None);

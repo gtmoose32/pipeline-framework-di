@@ -1,30 +1,28 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using LightInject.Interception;
+﻿using LightInject.Interception;
 using PipelineFramework.Abstractions;
 using Serilog;
+using System;
+using System.Diagnostics;
 
-namespace PipelineFramework.LightInject.Logging.Interceptors
+namespace PipelineFramework.LightInject.Logging
 {
-    public class AsyncPipelineComponentInterceptor : AsyncInterceptor
+    public class PipelineComponentInterceptor : IInterceptor
     {
         protected ILogger Logger { get; }
 
-        public AsyncPipelineComponentInterceptor(ILogger logger) 
-            : base(null)
+        public PipelineComponentInterceptor(ILogger logger)
         {
             Logger = logger;
         }
 
-        protected override async Task<T> InvokeAsync<T>(IInvocationInfo invocationInfo)
+        public object Invoke(IInvocationInfo invocationInfo)
         {
             var logger = EnrichLogger(invocationInfo);
             var stopwatch = new Stopwatch();
             try
             {
                 stopwatch.Start();
-                var result = await base.InvokeAsync<T>(invocationInfo);
+                var result = invocationInfo.Proceed();
                 stopwatch.Stop();
                 logger.Information(LogMessageTemplates.SuccessMessage, stopwatch.ElapsedMilliseconds);
                 return result;

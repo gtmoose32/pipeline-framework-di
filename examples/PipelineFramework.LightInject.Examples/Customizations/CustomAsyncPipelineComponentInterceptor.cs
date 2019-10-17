@@ -1,11 +1,11 @@
 ﻿using LightInject.Interception;
-using PipelineFramework.LightInject.Logging.Interceptors;
+using PipelineFramework.LightInject.Logging;
 using Serilog;
 using System.Linq;
 
 namespace PipelineFramework.LightInject.Examples.Customizations
 {
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage]
     public class CustomAsyncPipelineComponentInterceptor : AsyncPipelineComponentInterceptor
     {
         public CustomAsyncPipelineComponentInterceptor(ILogger logger) 
