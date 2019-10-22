@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Exceptions;
 using System;
 
 namespace PipelineFramework.Autofac
@@ -13,9 +14,12 @@ namespace PipelineFramework.Autofac
             _componentContext = componentContext ?? throw new ArgumentNullException(nameof(componentContext));
         }
 
-        public T GetInstance<T>(string name) where T : IPipelineComponent
+        public T GetInstance<T>(string name) where T : class, IPipelineComponent
         {
-            return _componentContext.ResolveNamed<T>(name);
+
+            if (_componentContext.TryResolveNamed(name, typeof(T), out var instance)) return (T)instance;
+        
+            throw new PipelineComponentNotFoundException($"Pipeline component named, '{name}' could not be found.");
         }
     }
 }

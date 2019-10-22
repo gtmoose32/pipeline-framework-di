@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Builder;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -35,14 +36,14 @@ namespace PipelineFramework.LightInject.Examples
                 Examples.PipelineNames.PipelineName);
 
             registry.RegisterSingleton(factory =>
-                    PipelineBuilder<ExamplePipelinePayload>
-                        .Async()
-                        .WithComponent<Component1>()
-                        .WithComponent<Component2>()
-                        .WithComponent<ExceptionComponent>()
-                        .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
-                        .WithSettings(factory.GetInstance<IDictionary<string, IDictionary<string, string>>>())
-                        .Build(),
+                PipelineBuilder<ExamplePipelinePayload>
+                    .Async()
+                    .WithComponent<Component1>()
+                    .WithComponent<Component2>()
+                    .WithComponent<ExceptionComponent>()
+                    .WithComponentResolver(factory.GetInstance<IPipelineComponentResolver>())
+                    .WithNoSettings()
+                    .Build(),
                 Examples.PipelineNames.ExceptionPipelineName);
         }
     }

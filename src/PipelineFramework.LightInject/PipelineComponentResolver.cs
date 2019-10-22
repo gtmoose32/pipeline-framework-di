@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Exceptions;
 using System;
 
 namespace PipelineFramework.LightInject
@@ -13,7 +14,8 @@ namespace PipelineFramework.LightInject
             _serviceFactory = serviceFactory ?? throw new ArgumentNullException(nameof(serviceFactory));
         }
 
-        public T GetInstance<T>(string name) where T : IPipelineComponent
-            => _serviceFactory.GetInstance<T>(name);
+        public T GetInstance<T>(string name) where T : class, IPipelineComponent
+            => _serviceFactory.TryGetInstance<T>(name) ?? 
+               throw new PipelineComponentNotFoundException($"Pipeline component named, '{name}' could not be found.");
     }
 }

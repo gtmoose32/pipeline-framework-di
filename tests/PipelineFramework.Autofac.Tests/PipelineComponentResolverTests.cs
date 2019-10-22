@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Exceptions;
 using PipelineFramework.Tests.SharedInfrastructure;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -41,6 +42,15 @@ namespace PipelineFramework.Autofac.Tests
 
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<FooComponent>();
+        }
+
+        [TestMethod]
+        public void PipelineComponentResolver_NotFoundTest()
+        {
+            var target = new PipelineComponentResolver(_container);
+            Action act = () => target.GetInstance<IPipelineComponent<TestPayload>>("SomeBadName");
+
+            act.Should().ThrowExactly<PipelineComponentNotFoundException>();
         }
     }
 }

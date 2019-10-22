@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Builder;
 using PipelineFramework.Tests.SharedInfrastructure;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

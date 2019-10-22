@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using PipelineFramework.Abstractions;
+using PipelineFramework.Builder;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
