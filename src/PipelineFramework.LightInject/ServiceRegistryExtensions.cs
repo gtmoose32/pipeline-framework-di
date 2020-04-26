@@ -1,6 +1,7 @@
 ﻿using LightInject;
 using LightInject.Interception;
 using PipelineFramework.Abstractions;
+using PipelineFramework.LightInject.Interception;
 using PipelineFramework.LightInject.Logging;
 using System;
 using System.Linq;
@@ -65,11 +66,11 @@ namespace PipelineFramework.LightInject
         public static void AddAsyncPipelineComponentLogging<TInterceptor>(this IServiceRegistry serviceRegistry)
             where TInterceptor : AsyncInterceptor
         {
-            serviceRegistry.Register<AsyncInterceptor, TInterceptor>();
+            serviceRegistry.Register<TInterceptor>();
 
             serviceRegistry.Intercept(
                 sr => sr.ServiceType.IsAsyncPipelineComponentInterface(),
-                (factory, proxy) => proxy.Implement(factory.GetAsyncInterceptor, mi => mi.Name == "ExecuteAsync"));
+                AsyncInterceptorProxyDefinition<TInterceptor>());
         }
 
         /// <summary>
@@ -78,11 +79,11 @@ namespace PipelineFramework.LightInject
         /// <param name="serviceRegistry"></param>
         public static void AddAsyncPipelineComponentLogging(this IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<AsyncInterceptor, AsyncPipelineComponentInterceptor>();
+            serviceRegistry.Register<AsyncPipelineComponentInterceptor>();
 
             serviceRegistry.Intercept(
                 sr => sr.ServiceType.IsAsyncPipelineComponentInterface(),
-                (factory, proxy) => proxy.Implement(factory.GetAsyncInterceptor, mi => mi.Name == "ExecuteAsync"));
+                AsyncInterceptorProxyDefinition<AsyncPipelineComponentInterceptor>());
         }
 
         /// <summary>
@@ -93,11 +94,11 @@ namespace PipelineFramework.LightInject
         public static void AddPipelineComponentLogging<TInterceptor>(this IServiceRegistry serviceRegistry)
             where TInterceptor : IInterceptor
         {
-            serviceRegistry.Register<IInterceptor, TInterceptor>();
+            serviceRegistry.Register<TInterceptor>();
 
             serviceRegistry.Intercept(
                 sr => sr.ServiceType.IsPipelineComponentInterface(),
-                (factory, definition) => definition.Implement(factory.GetInterceptor, mi => mi.Name == "Execute"));
+                InterceptorProxyDefinition<TInterceptor>());
         }
 
         /// <summary>
@@ -106,11 +107,27 @@ namespace PipelineFramework.LightInject
         /// <param name="serviceRegistry"></param>
         public static void AddPipelineComponentLogging(this IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IInterceptor, PipelineComponentInterceptor>();
+            serviceRegistry.Register<PipelineComponentInterceptor>();
 
             serviceRegistry.Intercept(
                 sr => sr.ServiceType.IsPipelineComponentInterface(),
-                (factory, definition) => definition.Implement(factory.GetInterceptor, mi => mi.Name == "Execute"));
+                InterceptorProxyDefinition<PipelineComponentInterceptor>());
+        }
+
+        /// <summary>
+        /// Add an interceptor that will only be invoked for <see cref="IAsyncPipelineComponent{TPayload}"/> of a specified payload type.
+        /// </summary>
+        /// <typeparam name="TInterceptor">The type of the interceptor</typeparam>
+        /// <typeparam name="TPayload">The type of payload that must be matched</typeparam>
+        /// <param name="serviceRegistry"></param>
+        public static void AddPayloadScopedPipelineAsyncInterceptor<TInterceptor, TPayload>(this IServiceRegistry serviceRegistry) 
+            where TInterceptor : PayloadScopedPipelineComponentAsyncInterceptorBase<TPayload> where TPayload : class
+        {
+            serviceRegistry.Register<TInterceptor>();
+
+            serviceRegistry.Intercept(
+                sr => sr.ServiceType.IsAsyncPipelineComponentInterface<TPayload>(),
+                AsyncInterceptorProxyDefinition<TInterceptor>());
         }
 
         #region Private Extensions
@@ -123,6 +140,12 @@ namespace PipelineFramework.LightInject
             => type.IsInterface &&
                type.IsGenericType &&
                type.GetGenericTypeDefinition() == typeof(IAsyncPipelineComponent<>);
+
+        private static bool IsAsyncPipelineComponentInterface<TPayload>(this Type type)
+            => type.IsInterface &&
+               type.IsGenericType &&
+               type.GetGenericTypeDefinition() == typeof(IAsyncPipelineComponent<>) &&
+               type.GenericTypeArguments[0] == typeof(TPayload);
 
         private static IServiceRegistry RegisterComponentsFromAssembly(this IServiceRegistry serviceRegistry, Assembly assembly, bool useAsyncComponents = false)
         {
@@ -154,7 +177,16 @@ namespace PipelineFramework.LightInject
             //Local functions
             bool IsAsyncPipelineComponent(Type i) => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAsyncPipelineComponent<>);
             bool IsPipelineComponent(Type i) => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPipelineComponent<>);
-        } 
+        }
+
+        private static Action<IServiceFactory, ProxyDefinition> InterceptorProxyDefinition<TInterceptor>()
+            where TInterceptor : IInterceptor
+            => (factory, proxy) => proxy.Implement(factory.GetInterceptor<TInterceptor>, mi => mi.Name == "Execute");
+
+        private static Action<IServiceFactory, ProxyDefinition> AsyncInterceptorProxyDefinition<TInterceptor>()
+            where TInterceptor : IInterceptor
+            => (factory, proxy) => proxy.Implement(factory.GetInterceptor<TInterceptor>, mi => mi.Name == "ExecuteAsync");
+
         #endregion
     }
 }
