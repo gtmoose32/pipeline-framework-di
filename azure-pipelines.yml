@@ -47,5 +47,4 @@ steps:
   displayName: 'Publish Artifact: drop'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'    
-      
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
