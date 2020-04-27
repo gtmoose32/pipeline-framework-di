@@ -1,5 +1,5 @@
 # Pipeline Framework Dependency Injection
-[![Build status](https://dev.azure.com/gtmoose/Mathis%20Home/_apis/build/status/Pipeline%20Framework/Pipeline%20Framework%20DI%20-%20CICD)](https://dev.azure.com/gtmoose/Mathis%20Home/_build/latest?definitionId=7)
+![Build Status](https://dev.azure.com/gtmoose/Mathis%20Home/_apis/build/status/Pipeline%20Framework/pipeline-framework-di?branchName=master)
 
 ## What is it?
 
