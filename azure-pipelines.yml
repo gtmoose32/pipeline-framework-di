@@ -1,0 +1,33 @@
+trigger: none
+
+pr:
+  - master
+  - releases/*
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+- name: SOLUTION_NAME
+  value: 'PipelineFramework.DI.sln'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'build all'
+  inputs:
+    command: build
+    projects: $(SOLUTION_NAME)
+    arguments: '-c release'
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: 'test'
+    projects: 'tests/**/*.Tests.csproj'
+    arguments: '--no-build --logger trx --results-directory $(Common.TestResultsDirectory) --collect:"Code Coverage" --configuration Release /property:langversion=latest'
+    publishTestResults: false
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '$(Common.TestResultsDirectory)\*.trx'
