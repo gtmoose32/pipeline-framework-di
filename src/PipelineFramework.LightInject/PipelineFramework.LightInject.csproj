@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/gtmoose32/pipeline-framework-di</RepositoryUrl>
     <PackageProjectUrl>https://github.com/gtmoose32/pipeline-framework-di</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Extends PipelineFramework to enable LightInject DI container for pipeline construction and execution</Description>
     <NeutralLanguage>en</NeutralLanguage>
