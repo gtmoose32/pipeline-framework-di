@@ -64,7 +64,7 @@ namespace PipelineFramework.LightInject
         /// <typeparam name="TInterceptor"></typeparam>
         /// <param name="serviceRegistry"></param>
         public static void AddAsyncPipelineComponentLogging<TInterceptor>(this IServiceRegistry serviceRegistry)
-            where TInterceptor : AsyncInterceptor
+            where TInterceptor : AsyncPipelineComponentInterceptor
         {
             serviceRegistry.Register<TInterceptor>();
 
@@ -92,7 +92,7 @@ namespace PipelineFramework.LightInject
         /// <typeparam name="TInterceptor"></typeparam>
         /// <param name="serviceRegistry"></param>
         public static void AddPipelineComponentLogging<TInterceptor>(this IServiceRegistry serviceRegistry)
-            where TInterceptor : IInterceptor
+            where TInterceptor : PipelineComponentInterceptor
         {
             serviceRegistry.Register<TInterceptor>();
 
