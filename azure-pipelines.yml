@@ -43,8 +43,12 @@ steps:
     configuration: release
     packDirectory: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1  
-  displayName: 'Publish Artifact: drop'
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+- task: NuGetCommand@2
+  displayName: Publish
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranchName'], 'master'))
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    command: push
+    packagesToPack: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    allowPackageConflicts: true
+    nuGetFeedType: external
+    publishFeedCredentials: nuget.org
