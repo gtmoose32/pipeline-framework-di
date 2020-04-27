@@ -31,3 +31,19 @@ steps:
   inputs:
     testResultsFormat: 'VSTest'
     testResultsFiles: '$(Common.TestResultsDirectory)\*.trx'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    command: pack
+    packagesToPack: '**/PipelineFramework.LightInject.csproj;**/PipelineFramework.Autofac.csproj'
+    configuration: release
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1  
+  displayName: 'Publish Artifact: drop'
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'    
+      
