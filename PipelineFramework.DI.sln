@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BE430022-FA46-4178-9E40-3673B2D1A0DA}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\SharedInfrastructure\SharedInfrastructure.projitems*{2d757ac7-38da-4172-b969-99825096c8a4}*SharedItemsImports = 13
+		tests\SharedInfrastructure\SharedInfrastructure.projitems*{5fba3f0c-dd74-4efa-9965-92ecbd115e78}*SharedItemsImports = 5
+		tests\SharedInfrastructure\SharedInfrastructure.projitems*{da370e23-d7e6-4c5c-8990-8e2bbd24b60a}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

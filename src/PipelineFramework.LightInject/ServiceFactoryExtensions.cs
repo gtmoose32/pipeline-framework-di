@@ -5,10 +5,7 @@ namespace PipelineFramework.LightInject
 {
     public static class ServiceFactoryExtensions
     {
-        public static IInterceptor GetAsyncInterceptor(this IServiceFactory factory) 
-            => factory.GetInstance<AsyncInterceptor>();
-
-        public static IInterceptor GetInterceptor(this IServiceFactory factory) 
-            => factory.GetInstance<IInterceptor>();
+        public static IInterceptor GetInterceptor<TInterceptor>(this IServiceFactory factory) where TInterceptor : IInterceptor
+            => factory.GetInstance<TInterceptor>();
     }
 }
