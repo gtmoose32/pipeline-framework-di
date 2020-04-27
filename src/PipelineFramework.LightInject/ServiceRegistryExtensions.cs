@@ -184,7 +184,7 @@ namespace PipelineFramework.LightInject
             => (factory, proxy) => proxy.Implement(factory.GetInterceptor<TInterceptor>, mi => mi.Name == "Execute");
 
         private static Action<IServiceFactory, ProxyDefinition> AsyncInterceptorProxyDefinition<TInterceptor>()
-            where TInterceptor : IInterceptor
+            where TInterceptor : AsyncInterceptor
             => (factory, proxy) => proxy.Implement(factory.GetInterceptor<TInterceptor>, mi => mi.Name == "ExecuteAsync");
 
         #endregion
